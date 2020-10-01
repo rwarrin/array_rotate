@@ -42,7 +42,7 @@
 static inline void
 Reverse(int32_t *Array, int32_t Start, int32_t End)
 {
-	for(int32_t Left = Start, Right = End - 1;
+	for(int32_t Left = Start, Right = End;
 		Left < Right;
 		++Left, --Right)
 	{
@@ -52,8 +52,6 @@ Reverse(int32_t *Array, int32_t Start, int32_t End)
 	}
 }
 
-// TODO(rick): Fix rotate bug, 1 rotate is actually rotating 2 and pulling in a
-// random value from the end of the array
 int main(int Argc, char **Argv)
 {
 	if(Argc != 3)
@@ -78,7 +76,7 @@ int main(int Argc, char **Argv)
 		return 3;
 	}
 
-	int32_t *Array = malloc(sizeof(int32_t) * Elements);
+	int32_t *Array = malloc(sizeof(int32_t) * Elements + 1);
 	if(!Array)
 	{
 		fprintf(stderr, "Failed to allocate enough space for the list.\n");
@@ -87,15 +85,18 @@ int main(int Argc, char **Argv)
 
 	int32_t Index = 0;
 	int32_t Number = 0;
-	while((scanf("%d", &Number) != EOF) &&
-		  (Index < Elements - 1))
+	while((scanf"%d", &Number != EOF))
 	{
-		Array[Index++] = Number;
+	    Array[Index++] = Number;
+	    if(Index >= Elements)
+	    {
+	        break;
+	    }
 	}
 
 	Reverse(Array, 0, Rotate);
-	Reverse(Array, Rotate, Elements);
-	Reverse(Array, 0, Elements);
+	Reverse(Array, Rotate, Elements - 1);
+	Reverse(Array, 0, Elements - 1);
 
 	for(int32_t i = 0; i < Elements; ++i)
 	{
